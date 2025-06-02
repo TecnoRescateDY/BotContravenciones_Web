@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BOT CONTRAVENCIONES ⚖️</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #000;
+      color: #0f0;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 2rem;
+    }
+    .consola {
+      background-color: #111;
+      border: 1px solid #0f0;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #0f0;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .pantalla {
+      background-color: #222;
+      padding: 1rem;
+      border-radius: 5px;
+      margin-bottom: 1.5rem;
+      min-height: 60px;
+      font-size: 1.1rem;
+    }
+    .botonera button {
+      background-color: #000;
+      border: 1px solid #0f0;
+      color: #0f0;
+      font-size: 1rem;
+      padding: 0.75rem 1.5rem;
+      margin: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .botonera button:hover {
+      background-color: #0f0;
+      color: #000;
+    }
+    #busqueda {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #0f0;
+      background-color: #000;
+      color: #0f0;
+      border-radius: 5px;
+    }
+    #resultadoBusqueda {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #222;
+      border-radius: 5px;
+    }
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      color: lime;
+    }
+    footer a {
+      color: lime;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="consola">
+    <h1>⚖️ BOT CONTRAVENCIONES ACTIVADO ⚖️</h1>
+    <div id="respuesta" class="pantalla">🤖 Hola, soy tu asistente legal. ¿Qué necesitás consultar?</div>
+
+    <div class="botonera">
+      <button onclick="toggleBusqueda()">🔍 Buscar artículo</button>
+      <button onclick="mostrar('🎙️ Dictado de acta iniciado (módulo en desarrollo).')">🎙️ Dictar acta</button>
+      <button onclick="mostrar('📍 Geolocalización activada (requiere navegador compatible).')">📍 Capturar ubicación</button>
+    </div>
+
+    <div id="buscador" style="display:none;">
+      <input type="text" id="busqueda" placeholder="Ej: ruido, 85" oninput="buscarArticulo()" />
+      <div id="resultadoBusqueda"></div>
+    </div>
+
+    <footer>
+      ♻️ [🧙‍♂️+🦊] en modo edición 🛠️<br />
+      <a href="https://tecnorescatelanding.netlify.app" target="_blank">
+        🌐 TecnoRescate
+      </a>
+    </footer>
+  </div>
+
+  <script>
+    const articulos = [
+      { numero: 85, titulo: "Ruidos molestos", texto: "Será sancionado quien ocasione ruidos que perturben la tranquilidad pública en horario nocturno." },
+      { numero: 94, titulo: "Consumo de alcohol en la vía pública", texto: "Está prohibido el consumo de bebidas alcohólicas en espacios públicos sin autorización." },
+      { numero: 108, titulo: "Ofensas verbales", texto: "Serán sancionadas las personas que profieran insultos u ofensas que alteren la convivencia." }
+    ];
+
+    function mostrar(mensaje) {
+      document.getElementById('respuesta').textContent = mensaje;
+    }
+
+    function toggleBusqueda() {
+      const buscador = document.getElementById('buscador');
+      const visible = buscador.style.display === 'block';
+      buscador.style.display = visible ? 'none' : 'block';
+      mostrar('🔍 Buscador de artículos activado.');
+    }
+
+    function buscarArticulo() {
+      const input = document.getElementById('busqueda').value.toLowerCase();
+      const resultados = articulos.filter(art =>
+        art.numero.toString().includes(input) ||
+        art.titulo.toLowerCase().includes(input) ||
+        art.texto.toLowerCase().includes(input)
+      );
+      const contenedor = document.getElementById('resultadoBusqueda');
+      contenedor.innerHTML = resultados.length ? resultados.map(a => `
+        <div><strong>Art. ${a.numero} - ${a.titulo}</strong><br>${a.texto}</div><br>
+      `).join('') : '<p>⚠️ No se encontró ningún artículo relacionado.</p>';
+    }
+  </script>
+</body>
+</html>
